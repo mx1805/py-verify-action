@@ -31,5 +31,6 @@ runs:
     run: |
       python << 'EOF'
       import os
-      print(f"The target directory is {os.environ.get("TARGET_DIR")})
+      target_dir = os.environ.get("TARGET_DIR")
+      print("The target directory is", target_dir )
       EOF
