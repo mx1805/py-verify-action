@@ -24,6 +24,7 @@ runs:
       pip install bandit
     
   - name: Run Bandit scan
+    shell: bash
     env:
       TARGET_DIR: ${{ inputs.target_dir }}
     run: |
