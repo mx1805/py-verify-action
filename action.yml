@@ -1,0 +1,33 @@
+name: "Python verify action (Composite Action)"
+description: "Runs Bandit on your Python code and sends reports"
+
+inputs:
+  target_dir:
+    description: "Directory to scan for security issues"
+    required: false
+    default: "."
+  python_version:
+    description: "The vesrsion of the Python"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Setup Python
+    uses: action/setup-python@v4
+    with:
+      python-version: ${{ inputs.python_version }}
+
+  - name: Install Bandit
+    run: |
+      python -m pip install --upgrade pip
+      pip install bandit
+    
+  - name: Run Bandit scan
+    env:
+      TARGET_DIR: ${{ inputs.target_dir }}
+    run: |
+      python << 'EOF'
+      import os
+      print(f"The target directory is {os.environ.get("TARGET_DIR")})
+      EOF
